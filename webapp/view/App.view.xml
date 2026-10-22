@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mvc:View
+	controllerName="paltarumi.portalweb.usuario.controller.App"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m"
+	displayBlock="true">
+	
+	<Shell id="shell">
+		<App id="app">
+			<pages>
+				<mvc:XMLView viewName="paltarumi.portalweb.usuario.view.MainView" />
+			</pages>
+		</App>
+	</Shell>
+</mvc:View>

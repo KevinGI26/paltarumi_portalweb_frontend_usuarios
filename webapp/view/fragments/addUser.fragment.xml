@@ -1,0 +1,194 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+>
+    <Dialog
+        id="idAddUserDialog"
+        title="{i18n>addUserTitle}"
+        titleAlignment="Center"
+        icon="sap-icon://add-employee"
+    >
+        <content>
+            <VBox
+                class="sapUiSmallMargin"
+                id="dialogo"
+                width="450px"
+            >
+                <f:SimpleForm
+                    editable="true"
+                    layout="ColumnLayout"
+                    columnsM="1"
+                    columnsL="1"
+                    columnsXL="1"
+                >
+                    <f:content>
+                        <Label text="{i18n>rol}" />
+                        <MultiComboBox
+                            id="mcRol"
+                            required="true"
+                            selectionChange="handleSelectionChange"
+                            selectionFinish="handleSelectionFinish"
+                            items="{
+								path: 'localModel>/listaRol',
+								sorter: { path: 'Name' }
+							}"
+                            selectedKeys="{
+								path: 'localModel>/usuario/roles'
+							}"
+                            valueState="{
+								path: 'localModel>/usuario/valueStateRoles'
+							}"
+                        >
+                            <core:Item
+                                key="{localModel>key}"
+                                text="{localModel>text}"
+                            />
+                        </MultiComboBox>
+
+                        <Label
+                            id="lbIdentificacionFiscal"
+                            text="{i18n>identificacionFiscal}"
+                            visible="false"
+                        />
+                        <Input
+                            id="inputIdentificacionFiscal"
+                            value="{
+								path: 'localModel>/usuario/usuario'
+							}"
+                            maxLength="{localModel>/maxLengthRUC}"
+                            liveChange="onInputIdentificacionFiscal"
+                            valueState="{
+								path: 'localModel>/usuario/valueStateUsuario'
+							}"
+                            visible="false"
+                            required="true"
+                            placeholder="{localModel>/placeholderRUC}"
+                            valueStateText="{localModel>/valueStateTextRUC}"
+                        />
+
+                        <Label
+                            id="lbRazonSocial"
+                            text="{i18n>razonSocial}"
+                            visible="false"
+                        />
+                        <Input
+                            id="inputRazonSocial"
+                            placeholder="{i18n>razonSocialPH2}"
+                            value="{
+								path: 'localModel>/usuario/razonSocial'
+							}"
+                            editable="false"
+                            liveChange="onInputRazonSocialUsuario"
+                            visible="false"
+                        />
+
+                        <Label
+                            id="lbUsuario"
+                            text="{i18n>usuarioadd}"
+                            visible="false"
+                        />
+                        <Input
+                            id="inputUsuario"
+                            placeholder="{i18n>usuarioaddPH}"
+                            value="{
+								path: 'localModel>/usuario/usuario'
+							}"
+                            liveChange="onInputUsuario"
+                            maxLength="16"
+                            visible="false"
+                            required="true"
+                            valueState="{
+								path: 'localModel>/usuario/valueStateUsuario'
+							}"
+                        />
+
+                        <Label text="{i18n>Correo}" />
+                        <Input
+                            required="true"
+                            placeholder="{i18n>correoPH}"
+                            value="{
+								path: 'localModel>/usuario/correo'
+							}"
+                            liveChange="onEmailInput"
+                            valueState="{
+								path: 'localModel>/usuario/valueStateCorreo'
+							}"
+                        />
+
+                        <Label
+                            id="lbTipoEmisor"
+                            text="Tipo de Emisor"
+                            visible="false"
+                        />
+                        <Select
+                            id="slTipoEmisor"
+                            visible="false"
+                            required="true"
+                            forceSelection="true"
+                            change="onSelectChange"
+                            items="{
+                                path:'localModel>/listaTipoEmisor'
+                            }"
+                            selectedKey="{
+                            path: 'localModel>/usuario/selectTipoEmisor'
+                            }"
+                        >
+                            <core:Item
+                                key="{localModel>key}"
+                                text="{localModel>text}"
+                                enabled="{= ${localModel>key} === '0' ? false : true }"
+                            />
+                        </Select>
+
+                        <Label text="{i18n>nombres}" />
+                        <Input
+                            required="true"
+                            placeholder="{i18n>nombresPH}"
+                            value="{
+								path: 'localModel>/usuario/nombres'
+							}"
+                            liveChange="onInputChangeNombres"
+                            valueState="{
+								path: 'localModel>/usuario/valueStateNombres'
+							}"
+                        />
+                        <Label text="{i18n>apellidos}" />
+                        <Input
+                            required="true"
+                            placeholder="{i18n>apellidosPH}"
+                            value="{
+								path: 'localModel>/usuario/apellidos'
+							}"
+                            liveChange="onInputChangeApellidos"
+                            valueState="{
+								path: 'localModel>/usuario/valueStateApellidos'
+							}"
+                        />
+                    </f:content>
+                </f:SimpleForm>
+            </VBox>
+        </content>
+        <footer>
+            <Toolbar>
+                <content>
+                    <ToolbarSpacer />
+                    <Button
+                        type="Emphasized"
+                        text="Guardar"
+                        press="onAddUser_Accept"
+                    />
+
+                    <Button
+                        id="Reject"
+                        text="Cancelar"
+                        type="Transparent"
+                        press="onAddUser_Reject"
+                        ariaHasPopup="Dialog"
+                    />
+                </content>
+            </Toolbar>
+        </footer>
+    </Dialog>
+</core:FragmentDefinition>

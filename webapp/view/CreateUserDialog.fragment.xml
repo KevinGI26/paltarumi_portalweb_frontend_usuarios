@@ -1,0 +1,70 @@
+<core:FragmentDefinition 
+	xmlns:core="sap.ui.core"
+	xmlns="sap.m"
+	xmlns:f="sap.ui.layout.form">
+	
+	<Dialog id="createUserDialog" title="Crear Usuario" showHeader="true">
+		<f:SimpleForm editable="true" layout="ResponsiveGridLayout" columnsL="1" columnsM="1">
+			<f:content>
+				<Label text="Rol:" required="true" />
+				<Select 
+					id="rolesCombo"
+					selectedKey="{localModel>/usuario/roles}"
+					valueStateText="Rol es requerido"
+					valueState="{localModel>/usuario/valueStateRoles}">
+					<core:Item key="" text="Seleccione" />
+					<core:Item key="ADM" text="Administrador" />
+					<core:Item key="GES" text="Gestor" />
+					<core:Item key="USR" text="Usuario" />
+					<core:Item key="VIS" text="Visitante" />
+				</Select>
+				
+				<Label text="Correo:" required="true" />
+				<Input 
+					id="correoInput"
+					value="{localModel>/usuario/correo}"
+					type="Email"
+					placeholder="Ingrese el correo electrónico"
+					valueState="{localModel>/usuario/valueStateCorreo}"
+					valueStateText="Correo es requerido" />
+				
+				<Label text="Nombres:" required="true" />
+				<Input 
+					id="nombresInput"
+					value="{localModel>/usuario/nombres}"
+					placeholder="Ingrese los nombres"
+					valueState="{localModel>/usuario/valueStateNombres}"
+					valueStateText="Nombres son requeridos" />
+				
+				<Label text="Apellidos:" required="true" />
+				<Input 
+					id="apellidosInput"
+					value="{localModel>/usuario/apellidos}"
+					placeholder="Ingrese los apellidos"
+					valueState="{localModel>/usuario/valueStateApellidos}"
+					valueStateText="Apellidos son requeridos" />
+				
+				<Label text="Tipo Emisor:" />
+				<Select id="tipoEmisorSelect">
+					<core:Item key="" text="Seleccione" />
+					<core:Item key="E" text="Emisor" />
+					<core:Item key="C" text="Cliente" />
+					<core:Item key="P" text="Proveedor" />
+				</Select>
+				
+				<Label text="Razón Social:" />
+				<Input 
+					id="razonSocialInput"
+					value="{localModel>/usuario/razonSocial}"
+					placeholder="Ingrese la razón social" />
+			</f:content>
+		</f:SimpleForm>
+		
+		<beginButton>
+			<Button text="Guardar" type="Emphasized" press="onSaveUser" />
+		</beginButton>
+		<endButton>
+			<Button text="Cancelar" press="onCancelDialog" />
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

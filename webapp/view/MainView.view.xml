@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mvc:View
+	controllerName="paltarumi.portalweb.usuario.controller.MainView"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core"
+	xmlns="sap.m"
+	xmlns:u="sap.ui.unified"
+	xmlns:table="sap.ui.table"
+	displayBlock="true">
+	
+	<Page id="mainPage" title="Usuarios" showHeader="true">
+		<headerContent>
+			<Button icon="sap-icon://log" text="GK" type="Transparent" />
+		</headerContent>
+		
+		<content>
+			<!-- Información del Usuario -->
+			<Panel expandable="false" expanded="true" class="sapUiSmallMargin">
+				<Text text="Nombre: {localModel>/infoUsuario/NOMBRE} {localModel>/infoUsuario/APELLIDO}" class="sapUiSmallMargin" />
+				<Text text="Usuario: {localModel>/infoUsuario/USUARIO}" class="sapUiSmallMargin" />
+			</Panel>
+			
+			<!-- Filtros -->
+			<Panel expandable="false" expanded="true" class="sapUiSmallMargin">
+				<f:SimpleForm layout="ResponsiveGridLayout" columnsL="4" columnsM="2">
+					<f:content>
+						<!-- Sociedad -->
+						<Label text="Sociedad:" required="true" />
+						<Select id="sociedadSelect">
+							<core:Item key="PE001" text="PALTARUMI S.A.C." />
+							<core:Item key="PE002" text="COPEINCA S.A.C." />
+							<core:Item key="PE003" text="San Fernando S.A." />
+						</Select>
+						
+						<!-- Tipo Emisor -->
+						<Label text="Tipo Emisor:" />
+						<Select id="tipoEmisorSelect">
+							<core:Item key="" text="Seleccione" />
+							<core:Item key="E" text="Emisor" />
+							<core:Item key="C" text="Cliente" />
+							<core:Item key="P" text="Proveedor" />
+						</Select>
+						
+						<!-- Roles -->
+						<Label text="Roles:" />
+						<Select id="rolesSelect">
+							<core:Item key="" text="Seleccione" />
+							<core:Item key="ADM" text="Administrador" />
+							<core:Item key="GES" text="Gestor" />
+							<core:Item key="USR" text="Usuario" />
+							<core:Item key="VIS" text="Visitante" />
+						</Select>
+						
+						<!-- Buscar -->
+						<Label text="Buscar:" />
+						<Input id="searchInput" placeholder="Buscar..." />
+					</f:content>
+				</f:SimpleForm>
+				
+				<!-- Botones de acción -->
+				<Toolbar class="sapUiSmallMargin">
+					<Button text="Ir" type="Emphasized" press="onSearch" />
+					<Button text="Restablecer" press="onLimpiarFiltros" />
+					<Button text="Adaptar filtros" press="onFilterChange" />
+				</Toolbar>
+			</Panel>
+			
+			<!-- Cantidad de Usuarios -->
+			<HBox class="sapUiSmallMargin">
+				<Text text="Cantidad de Usuarios: " class="sapUiSmallMarginEnd" />
+				<Text text="{localModel>/cantidadRegTotales}" />
+			</HBox>
+			
+			<!-- Tabla de Usuarios -->
+			<table:Table 
+				id="usuariosTable"
+				rows="{localModel>/listaUsuarios}"
+				visibleRowCount="10"
+				selectionMode="MultiToggle"
+				class="sapUiSmallMargin">
+				
+				<table:extension>
+					<Toolbar>
+						<Button 
+							icon="sap-icon://add" 
+							text="Agregar Usuario" 
+							type="Emphasized" 
+							press="onAddUser" />
+						<Button 
+							icon="sap-icon://delete" 
+							text="Eliminar Usuario" 
+							press="onDeleteSelectedUser" />
+						<Button 
+							icon="sap-icon://download" 
+							text="Descargar Usuarios" 
+							press="onDataExport" />
+						<Button 
+							icon="sap-icon://settings" 
+							text="Configuracion" 
+							press="onConfigurarColumnas" />
+					</Toolbar>
+				</table:extension>
+				
+				<table:columns>
+					<table:Column width="10%">
+						<Label text="Nombres" />
+						<table:template>
+							<Text text="{localModel>nombres}" />
+						</table:template>
+					</table:Column>
+					
+					<table:Column width="10%">
+						<Label text="Apellidos" />
+						<table:template>
+							<Text text="{localModel>apellidos}" />
+						</table:template>
+					</table:Column>
+					
+					<table:Column width="12%">
+						<Label text="Correo" />
+						<table:template>
+							<Text text="{localModel>correo}" />
+						</table:template>
+					</table:Column>
+					
+					<table:Column width="12%">
+						<Label text="Sociedad" />
+						<table:template>
+							<Text text="{localModel>razonSocial}" />
+						</table:template>
+					</table:Column>
+					
+					<table:Column width="10%">
+						<Label text="Tipo Emisor" />
+						<table:template>
+							<Text text="{localModel>tipoDeEmisorDesc}" />
+						</table:template>
+					</table:Column>
+					
+					<table:Column width="12%">
+						<Label text="Identificación Fiscal" />
+						<table:template>
+							<Text text="{localModel>ruc}" />
+						</table:template>
+					</table:Column>
+					
+					<table:Column width="15%">
+						<Label text="Razón Social" />
+						<table:template>
+							<Text text="{localModel>razonSocial}" />
+						</table:template>
+					</table:Column>
+					
+					<table:Column width="8%">
+						<Label text="Rol" />
+						<table:template>
+							<Text text="" />
+						</table:template>
+					</table:Column>
+					
+					<table:Column width="10%">
+						<Label text="Fecha de Creacion" />
+						<table:template>
+							<Text text="{localModel>fechaDeCreacion, formatter: '.formatter.formatFecha'}" />
+						</table:template>
+					</table:Column>
+					
+					<table:Column width="5%">
+						<Label text="" />
+						<table:template>
+							<Button icon="sap-icon://edit" type="Ghost" press="onPressEditUser" />
+						</table:template>
+					</table:Column>
+				</table:columns>
+			</table:Table>
+		</content>
+	</Page>
+</mvc:View>

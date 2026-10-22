@@ -1,0 +1,93 @@
+_schema-version: "3.2"
+ID: paltarumi-portalweb-usuario
+version: 0.0.3
+description: Gestión de Usuarios (HTML5 app para SAP Build Work Zone)
+
+parameters:
+  enable-parallel-deployments: true
+
+build-parameters:
+  before-all:
+    - builder: custom
+      commands:
+        - npm install
+
+modules:
+  - name: usuario-destination-content
+    type: com.sap.application.content
+    requires:
+      - name: usuario-destination-service
+        parameters:
+          content-target: true
+      - name: usuario-repo-host
+        parameters:
+          service-key:
+            name: usuario-repo-host-key
+      - name: usuario-uaa
+        parameters:
+          service-key:
+            name: usuario-uaa-key
+    parameters:
+      content:
+        instance:
+          destinations:
+            - Name: usuario_html_repo_host
+              ServiceInstanceName: usuario-html5-srv
+              ServiceKeyName: usuario-repo-host-key
+              sap.cloud.service: paltarumi.portalweb.usuario
+            - Authentication: OAuth2UserTokenExchange
+              Name: usuario_uaa
+              ServiceInstanceName: usuario-xsuaa-srv
+              ServiceKeyName: usuario-uaa-key
+              sap.cloud.service: paltarumi.portalweb.usuario
+          existing_destinations_policy: ignore
+    build-parameters:
+      no-source: true
+
+  - name: usuario-ui-deployer
+    type: com.sap.application.content
+    path: .
+    requires:
+      - name: usuario-repo-host
+        parameters:
+          content-target: true
+    build-parameters:
+      build-result: resources
+      requires:
+        - artifacts:
+            - paltarumiportalwebusuario.zip
+          name: usuario-app
+          target-path: resources/
+
+  - name: usuario-app
+    type: html5
+    path: .
+    build-parameters:
+      build-result: dist
+      builder: custom
+      commands:
+        - npm run build:cf
+      supported-platforms: []
+
+resources:
+  - name: usuario-destination-service
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: destination
+      service-plan: lite
+      config:
+        HTML5Runtime_enabled: true
+        version: 1.0.0
+  - name: usuario-repo-host
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: html5-apps-repo
+      service-plan: app-host
+      service-name: usuario-html5-srv
+  - name: usuario-uaa
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: xsuaa
+      service-plan: application
+      service-name: usuario-xsuaa-srv
+      path: ./xs-security.json

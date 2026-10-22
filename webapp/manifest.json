@@ -1,0 +1,87 @@
+{
+  "_version": "1.1.0",
+  "sap.app": {
+    "id": "paltarumi.portalweb.usuario",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "1.0.0"
+    },
+    "title": "Usuarios",
+    "description": "Gestión de Usuarios",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:basic",
+      "version": "1.0.0",
+      "toolsId": "d7e27e9d-0f85-42f8-ad81-052ef359354e"
+    },
+    "crossNavigation": {
+      "inbounds": {
+        "intent1": {
+          "signature": {
+            "parameters": {},
+            "additionalParameters": "allowed"
+          },
+          "semanticObject": "usuario",
+          "action": "display",
+          "title": "Usuario",
+          "icon": "sap-icon://user-settings"
+        }
+      }
+    }
+  },
+  "sap.cloud": {
+    "public": true,
+    "service": "paltarumi.portalweb.usuario"
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phoneHighRes": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": false,
+    "rootView": {
+      "viewName": "paltarumi.portalweb.usuario.view.App",
+      "type": "XML",
+      "async": true,
+      "id": "app"
+    },
+    "dependencies": {
+      "minUI5Version": "1.52.0",
+      "libs": {
+        "sap.ui.core": {},
+        "sap.m": {},
+        "sap.ui.layout": {},
+        "sap.ui.table": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "paltarumi.portalweb.usuario.i18n.i18n"
+        }
+      }
+    },
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
+    }
+  }
+}
